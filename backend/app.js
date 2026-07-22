@@ -2,15 +2,31 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+require("./config/db");
+
+const authRoutes = require("./routes/authRoutes");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/auth", authRoutes);
+
 app.get("/", (req, res) => {
     res.json({
         message: "Task Management API Running"
     });
+});
+
+const auth = require("./middleware/authMiddleware");
+
+app.get("/api/profile", auth, (req, res) => {
+
+    res.json({
+        user: req.user
+    });
+
 });
 
 module.exports = app;
