@@ -11,6 +11,8 @@ import TaskForm from "../components/TaskForm";
 import ConfirmDelete from "../components/ConfirmDelete";
 import Loading from "../components/Loading";
 
+import "./Dashboard.css";
+
 function Dashboard() {
   const [stats, setStats] = useState({});
   const [tasks, setTasks] = useState([]);
@@ -179,83 +181,96 @@ function Dashboard() {
   };
 
   return (
-    <>
-      <Navbar />
+  <div className="dashboard-page">
+    <Navbar />
 
-      <main className="container py-4">
-        <div className="mb-4">
-          <h1 className="h3 mb-1">
-            Task Dashboard
+    <main className="container dashboard-content">
+      <section className="dashboard-welcome mb-4">
+        <div>
+          <p className="dashboard-label">
+            TASK MANAGEMENT
+          </p>
+
+          <h1 className="dashboard-title">
+            Welcome to your dashboard
           </h1>
 
-          <p className="text-muted mb-0">
-            Manage and track your daily tasks.
+          <p className="dashboard-subtitle">
+            Organize your work, monitor task progress
+            and stay focused on your priorities.
           </p>
         </div>
 
-        <DashboardCards stats={stats} />
+        <button
+          type="button"
+          className="btn dashboard-create-button"
+          onClick={openCreateForm}
+        >
+          + Create Task
+        </button>
+      </section>
 
-        <section className="card shadow-sm mt-4">
-          <div className="card-body">
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-              <div>
-                <h2 className="h4 mb-1">Tasks</h2>
+      <DashboardCards stats={stats} />
 
-                <p className="text-muted mb-0">
-                  Create, update and organize your
-                  tasks.
-                </p>
-              </div>
+      <section className="dashboard-section-card mt-4">
+        <div className="dashboard-section-header">
+          <div>
+            <h2 className="dashboard-section-title">
+              My Tasks
+            </h2>
 
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={openCreateForm}
-              >
-                + Create Task
-              </button>
-            </div>
-
-            <SearchFilter
-              search={search}
-              setSearch={setSearch}
-              status={status}
-              setStatus={setStatus}
-              priority={priority}
-              setPriority={setPriority}
-              sort={sort}
-              setSort={setSort}
-            />
-
-            {loading ? (
-              <Loading />
-            ) : (
-              <TaskTable
-                tasks={tasks}
-                onEdit={openEditForm}
-                onDelete={openDeleteModal}
-              />
-            )}
+            <p className="dashboard-section-text">
+              Search, filter and manage your tasks.
+            </p>
           </div>
-        </section>
-      </main>
 
-      <TaskForm
-        show={showTaskForm}
-        onClose={closeTaskForm}
-        editingTask={editingTask}
-        onSave={saveTask}
-      />
+          <span className="dashboard-task-count">
+            {tasks.length}{" "}
+            {tasks.length === 1 ? "Task" : "Tasks"}
+          </span>
+        </div>
 
-      <ConfirmDelete
-        show={showDeleteModal}
-        task={selectedTask}
-        deleting={deleting}
-        onClose={closeDeleteModal}
-        onConfirm={deleteTask}
-      />
-    </>
-  );
+        <div className="dashboard-section-body">
+          <SearchFilter
+            search={search}
+            setSearch={setSearch}
+            status={status}
+            setStatus={setStatus}
+            priority={priority}
+            setPriority={setPriority}
+            sort={sort}
+            setSort={setSort}
+          />
+
+          {loading ? (
+            <Loading />
+          ) : (
+            <TaskTable
+              tasks={tasks}
+              onEdit={openEditForm}
+              onDelete={openDeleteModal}
+            />
+          )}
+        </div>
+      </section>
+    </main>
+
+    <TaskForm
+      show={showTaskForm}
+      onClose={closeTaskForm}
+      editingTask={editingTask}
+      onSave={saveTask}
+    />
+
+    <ConfirmDelete
+      show={showDeleteModal}
+      task={selectedTask}
+      deleting={deleting}
+      onClose={closeDeleteModal}
+      onConfirm={deleteTask}
+    />
+  </div>
+);
 }
 
 export default Dashboard;

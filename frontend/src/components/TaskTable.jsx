@@ -1,4 +1,18 @@
+import "./TaskTable.css";
+
 function TaskTable({ tasks, onEdit, onDelete }) {
+  const formatDate = (dateValue) => {
+    if (!dateValue) {
+      return "-";
+    }
+
+    return new Date(dateValue).toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
+
   const priorityClass = (priority) => {
     if (priority === "High") {
       return "text-bg-danger";
@@ -32,9 +46,9 @@ function TaskTable({ tasks, onEdit, onDelete }) {
   }
 
   return (
-    <div className="table-responsive mt-4">
-      <table className="table table-bordered table-hover align-middle">
-        <thead className="table-dark">
+    <div className="table-responsive task-table-wrapper mt-4">
+      <table className="table task-table align-middle">
+        <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
@@ -81,9 +95,7 @@ function TaskTable({ tasks, onEdit, onDelete }) {
                 </span>
               </td>
 
-              <td>
-                {task.due_date?.split("T")[0]}
-              </td>
+              <td>{formatDate(task.due_date)}</td>
 
               <td>
                 {task.created_at
@@ -96,7 +108,7 @@ function TaskTable({ tasks, onEdit, onDelete }) {
               <td className="text-center text-nowrap">
                 <button
                   type="button"
-                  className="btn btn-warning btn-sm me-2"
+                  className="btn btn-outline-warning btn-sm me-2 task-action-button"
                   onClick={() => onEdit(task)}
                 >
                   Edit
@@ -104,7 +116,7 @@ function TaskTable({ tasks, onEdit, onDelete }) {
 
                 <button
                   type="button"
-                  className="btn btn-danger btn-sm"
+                  className="btn btn-outline-danger btn-sm task-action-button"
                   onClick={() => onDelete(task)}
                 >
                   Delete

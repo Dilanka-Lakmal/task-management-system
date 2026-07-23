@@ -2,51 +2,82 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+import "./Navbar.css";
+
 function Navbar() {
+  const { user, logout } = useContext(AuthContext);
 
-    const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
-    const handleLogout = () => {
+  return (
+    <nav className="app-navbar">
 
-        logout();
+      <div className="container">
 
-        navigate("/");
+        <div className="navbar-content">
 
-    };
+          <div className="navbar-logo">
 
-    return (
-
-        <nav
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "15px",
-                background: "#222",
-                color: "#fff"
-            }}
-        >
-
-            <h2>Task Manager</h2>
+            <div className="logo-icon">
+              ✓
+            </div>
 
             <div>
 
-                Welcome {user?.name}
+              <h4 className="logo-title">
+                TaskFlow
+              </h4>
 
-                <button
-                    style={{ marginLeft: "20px" }}
-                    onClick={handleLogout}
-                >
-                    Logout
-                </button>
+              <span className="logo-subtitle">
+                Task Management System
+              </span>
 
             </div>
 
-        </nav>
+          </div>
 
-    );
+          <div className="navbar-right">
 
+            <div className="user-info">
+
+              <div className="user-avatar">
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
+
+              <div>
+
+                <div className="welcome-text">
+                  Welcome Back
+                </div>
+
+                <div className="user-name">
+                  {user?.name}
+                </div>
+
+              </div>
+
+            </div>
+
+            <button
+              className="logout-btn"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </nav>
+  );
 }
 
 export default Navbar;

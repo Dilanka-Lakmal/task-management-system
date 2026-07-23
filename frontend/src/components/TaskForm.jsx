@@ -22,8 +22,12 @@ function TaskForm({ show, onClose, editingTask, onSave }) {
         priority: editingTask.priority || "",
         status: editingTask.status || "Pending",
         due_date: editingTask.due_date
-          ? editingTask.due_date.split("T")[0]
-          : "",
+  ? new Date(editingTask.due_date).toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+  : "",
       });
     } else {
       setFormData(initialForm);
