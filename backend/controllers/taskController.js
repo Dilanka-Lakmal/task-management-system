@@ -55,11 +55,43 @@ const createTask = (req, res) => {
 
     const { title, description, priority, status, due_date } = req.body;
 
-    if (!title || !priority || !status || !due_date) {
-        return res.status(400).json({
-            message: "Required fields are missing"
-        });
-    }
+    // Required field validation
+if (!title || !title.trim()) {
+    return res.status(400).json({
+        message: "Title is required"
+    });
+}
+
+if (!priority) {
+    return res.status(400).json({
+        message: "Priority is required"
+    });
+}
+
+if (!status) {
+    return res.status(400).json({
+        message: "Status is required"
+    });
+}
+
+if (!due_date) {
+    return res.status(400).json({
+        message: "Due date is required"
+    });
+}
+
+// Due date validation
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const dueDate = new Date(due_date);
+dueDate.setHours(0, 0, 0, 0);
+
+if (dueDate < today) {
+    return res.status(400).json({
+        message: "Due date cannot be earlier than today"
+    });
+}
 
     db.query(
         `INSERT INTO tasks
@@ -87,6 +119,44 @@ const createTask = (req, res) => {
 const updateTask = (req, res) => {
 
     const { title, description, priority, status, due_date } = req.body;
+
+    // Required field validation
+if (!title || !title.trim()) {
+    return res.status(400).json({
+        message: "Title is required"
+    });
+}
+
+if (!priority) {
+    return res.status(400).json({
+        message: "Priority is required"
+    });
+}
+
+if (!status) {
+    return res.status(400).json({
+        message: "Status is required"
+    });
+}
+
+if (!due_date) {
+    return res.status(400).json({
+        message: "Due date is required"
+    });
+}
+
+// Due date validation
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const dueDate = new Date(due_date);
+dueDate.setHours(0, 0, 0, 0);
+
+if (dueDate < today) {
+    return res.status(400).json({
+        message: "Due date cannot be earlier than today"
+    });
+}
 
     db.query(
         `UPDATE tasks
