@@ -1,11 +1,15 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import toast from "react-hot-toast";
 
 import api from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 import "./Login.css";
+
 
 function Login() {
   const navigate = useNavigate();
@@ -289,6 +293,7 @@ function Login() {
                           "Sign In"
                         )}
                       </button>
+
                     </form>
 
                     <div className="demo-account mt-4">
@@ -308,6 +313,15 @@ function Login() {
                         <strong>123456</strong>
                       </p>
                     </div>
+                    <p className="text-center text-muted mt-4 mb-0">
+  Don&apos;t have an account?{" "}
+  <Link
+    to="/register"
+    className="fw-semibold text-decoration-none"
+  >
+    Create account
+  </Link>
+</p>
                   </section>
                 </div>
               </div>
