@@ -33,11 +33,11 @@ The application allows authenticated users to manage daily tasks through a respo
   MySQL
 
 
-Installation Instructions
+# Installation Instructions
 
 Clone the repository.
 
-```bash
+-```bash
 git clone <repository-url>
 
 
@@ -61,7 +61,6 @@ DB_USER=root
 DB_PASSWORD=
 DB_NAME=task_management
 JWT_SECRET=your_secret_key
-
 
 ## Database Setup
 
